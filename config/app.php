@@ -83,7 +83,7 @@ return [
 
     'faker_locale' => env('APP_FAKER_LOCALE', 'en_US'),
 
-    'paginate_per_page' => env('PAGINATE_PER_PAGE', 15),
+    'product_per_page' => env('PRODUCT_PER_PAGE', 15),
 
     /*
     |--------------------------------------------------------------------------
