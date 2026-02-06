@@ -1,3 +1,58 @@
 {
-    "preset": "laravel"
+    "preset": "laravel",
+    "rules": {
+        "single_quote": true,
+        "array_syntax": {
+            "syntax": "short"
+        },
+        "no_unused_imports": true,
+        "concat_space": {
+            "spacing": "one"
+        },
+        "simplified_null_return": true,
+        "binary_operator_spaces": {
+            "default": "single_space",
+            "operators": {
+                "=>": "align_single_space_minimal"
+            }
+        },
+        "trailing_comma_in_multiline": {
+            "elements": ["arrays"]
+        },
+        "class_attributes_separation": {
+            "elements": {
+                "const": "only_if_meta",
+                "method": "one",
+                "property": "only_if_meta",
+                "trait_import": "none"
+            }
+        },
+        "ordered_imports": {
+            "sort_algorithm": "alpha"
+        },
+        "no_blank_lines_after_phpdoc": true,
+        "no_extra_blank_lines": {
+            "tokens": [
+                "extra",
+                "throw",
+                "use",
+                "return",
+                "curly_brace_block",
+                "square_brace_block"
+            ]
+        },
+        "no_trailing_whitespace": true,
+        "no_whitespace_in_blank_line": true,
+        "phpdoc_order": true,
+        "phpdoc_scalar": true,
+        "phpdoc_align": {
+            "align": "left"
+        },
+        "strict_comparison": true,
+        "visibility_required": true,
+        "phpdoc_no_useless_inheritdoc": true,
+        "method_argument_space": {
+            "on_multiline": "ensure_fully_multiline"
+        }
+    }
 }

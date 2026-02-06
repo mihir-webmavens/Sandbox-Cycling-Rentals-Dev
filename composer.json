@@ -10,18 +10,24 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "fakerphp/faker": "^1.23",
         "laravel/fortify": "^1.30",
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1",
         "livewire/flux": "^2.9.0",
-        "livewire/livewire": "^4.0"
+        "livewire/livewire": "^4.0",
+        "spatie/laravel-activitylog": "^4.11",
+        "spatie/laravel-medialibrary": "^11.17",
+        "spatie/laravel-permission": "^6.24",
+        "spatie/laravel-settings": "^3.6"
     },
     "require-dev": {
-        "fakerphp/faker": "^1.23",
+        "barryvdh/laravel-debugbar": "^4.0",
         "laravel/boost": "^2.1",
         "laravel/pail": "^1.2.2",
         "laravel/pint": "^1.24",
         "laravel/sail": "^1.41",
+        "laravel/telescope": "^5.17",
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.6",
         "pestphp/pest": "^4.3",
@@ -32,7 +38,10 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "files": [
+            "app/Helpers/helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
@@ -42,9 +51,12 @@
     "scripts": {
         "setup": [
             "composer install",
+            "@copy-hooks",
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
             "@php artisan key:generate",
+            "@php artisan storage:link",
             "@php artisan migrate --force",
+            "@php artisan db:seed --force",
             "npm install",
             "npm run build"
         ],
@@ -81,6 +93,9 @@
         ],
         "pre-package-uninstall": [
             "Illuminate\\Foundation\\ComposerScripts::prePackageUninstall"
+        ],
+        "copy-hooks": [
+            "bash -c 'cp .githooks/pre-commit .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit && echo \"✅ pre-commit hook installed.\"'"
         ]
     },
     "extra": {

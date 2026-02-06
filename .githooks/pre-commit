@@ -1,0 +1,26 @@
+#!/bin/bash
+
+echo "🔍 Checking Laravel Pint formatting..."
+
+# Check if Pint exists
+if [ ! -f "./vendor/bin/pint" ]; then
+    echo "❌ Laravel Pint not found!"
+    echo "👉 Run: composer require laravel/pint --dev"
+    exit 1
+fi
+
+# Run Pint in test mode (does NOT auto-fix)
+./vendor/bin/pint --test
+
+STATUS=$?
+
+if [ $STATUS -ne 0 ]; then
+    echo ""
+    echo "❌ Code style issues detected!"
+    echo "👉 Please run: ./vendor/bin/pint"
+    echo "👉 Then commit again."
+    exit 1
+fi
+
+echo "✅ Code is properly formatted."
+exit 0
