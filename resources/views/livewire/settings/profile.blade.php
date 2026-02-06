@@ -3,9 +3,38 @@
 
     <flux:heading class="sr-only">{{ __('Profile Settings') }}</flux:heading>
 
-    <x-settings.layout :heading="__('Profile')" :subheading="__('Update your name and email address')">
+    <x-settings.layout :heading="__('Profile')" :subheading="__('Update your profile information.')">
         <form wire:submit="updateProfileInformation" class="my-6 w-full space-y-6">
-            <flux:input wire:model="name" :label="__('Name')" type="text" required autofocus autocomplete="name" />
+            <flux:input wire:model="first_name" :label="__('First Name')" type="text" required autofocus autocomplete="first-name" />
+            <flux:input wire:model="last_name" :label="__('Last Name')" type="text" required autofocus autocomplete="last-name" />
+             <div class="flex flex-col gap-4 sm:flex-row sm:items-end ">
+
+                <!-- Country -->
+                <div class="w-full sm:w-1/4">
+
+                    <flux:field>
+                        <flux:label>Country</flux:label>
+                        <flux:select name="country" wire:model="country" >
+                            <flux:select.option value="IN">India</flux:select.option>
+                            <flux:select.option value="CA">Canada</flux:select.option>
+                            <flux:select.option value="US">United States</flux:select.option>
+                            <flux:select.option value="ES">Spain</flux:select.option>
+                            <flux:select.option value="CN">China</flux:select.option>
+                        </flux:select>
+                    </flux:field>
+
+                </div>
+
+                <!-- Phone -->
+                <div class="w-full sm:flex-1">
+                    
+                        <flux:field>
+                            <flux:label>Phone Number</flux:label>
+                            <flux:input name="phone" wire:model="phone"  type="tel" placeholder="123-456-7890" :value="old('phone')" required autocomplete="tel"/>
+                        </flux:field>
+                </div>
+
+            </div>
 
             <div>
                 <flux:input wire:model="email" :label="__('Email')" type="email" required autocomplete="email" />

@@ -12,6 +12,18 @@ class CreateNewUser implements CreatesNewUsers
 {
     use PasswordValidationRules, ProfileValidationRules;
 
+    public function profileRules()
+    {
+        return [
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name'  => ['required', 'string', 'max:255'],
+            'email'      => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
+            'phone'      => ['required', 'digits_between:10,12', 'unique:users,phone'],
+            'status'     => ['nullable', 'integer', 'in:0,1'],
+            'country'    => ['required', 'string', 'in:IN,CA,US,ES,CN'],
+        ];
+    }
+
     /**
      * Validate and create a newly registered user.
      *
@@ -25,9 +37,13 @@ class CreateNewUser implements CreatesNewUsers
         ])->validate();
 
         return User::create([
-            'name'     => $input['name'],
-            'email'    => $input['email'],
-            'password' => $input['password'],
+            'first_name' => $input['first_name'],
+            'last_name'  => $input['last_name'],
+            'email'      => $input['email'],
+            'country'    => $input['country'] ?? null,
+            'phone'      => $input['phone'] ?? null,
+            'status'     => $input['status'] ?? null,
+            'password'   => $input['password'],
         ]);
     }
 }

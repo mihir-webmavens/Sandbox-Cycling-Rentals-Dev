@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('last_name')->after('first_name');
             $table->string('country', 5)->nullable()->after('email');
             $table->string('phone', 20)->nullable()->after('country');
-            $table->tinyInteger('status', 50)->nullable()->after('phone');
+            $table->tinyInteger('status')->nullable()->after('phone');
         });
     }
 

@@ -12,16 +12,44 @@ use Livewire\Component;
 class Profile extends Component
 {
     use ProfileValidationRules;
-    public string $name = '';
+    public string $first_name = '';
+    public string $last_name = '';
     public string $email = '';
+    public string $phone = '';
+    public string $country = '';
+    public string $status = '';
 
     /**
      * Mount the component.
      */
     public function mount(): void
     {
-        $this->name = Auth::user()->name;
+        $this->first_name = Auth::user()->first_name;
+        $this->last_name = Auth::user()->last_name;
         $this->email = Auth::user()->email;
+        $this->phone = Auth::user()->phone;
+    }
+
+    public function profileRules($userId)
+    {
+        return [
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name'  => ['required', 'string', 'max:255'],
+            'email'      => [
+                'required',
+                'string',
+                'email',
+                'max:255',
+                'unique:users,email,' . $userId,
+            ],
+            'phone' => [
+                'nullable',
+                'digits_between:10,12',
+                'unique:users,phone,' . $userId,
+            ],
+            'status'  => ['nullable', 'integer', 'in:0,1'],
+            'country' => ['required', 'string', 'in:IN,CA,US,ES,CN'],
+        ];
     }
 
     /**

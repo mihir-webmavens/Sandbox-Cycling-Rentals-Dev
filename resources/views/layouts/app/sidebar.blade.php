@@ -30,7 +30,7 @@
                 </flux:sidebar.item>
             </flux:sidebar.nav>
 
-            <x-desktop-user-menu class="hidden lg:block" :name="auth()->user()->name" />
+            <x-desktop-user-menu class="hidden lg:block" :name="auth()->user()->first_name . ' ' . auth()->user()->last_name" />
         </flux:sidebar>
 
         <!-- Mobile User Menu -->
