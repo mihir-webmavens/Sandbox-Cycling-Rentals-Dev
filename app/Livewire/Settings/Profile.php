@@ -28,6 +28,7 @@ class Profile extends Component
         $this->last_name = Auth::user()->last_name;
         $this->email = Auth::user()->email;
         $this->phone = Auth::user()->phone;
+        $this->country = Auth::user()->country;
     }
 
     public function profileRules($userId)
@@ -47,7 +48,6 @@ class Profile extends Component
                 'digits_between:10,12',
                 'unique:users,phone,' . $userId,
             ],
-            'status'  => ['nullable', 'integer', 'in:0,1'],
             'country' => ['required', 'string', 'in:IN,CA,US,ES,CN'],
         ];
     }
@@ -60,6 +60,8 @@ class Profile extends Component
         $user = Auth::user();
 
         $validated = $this->validate($this->profileRules($user->id));
+
+        info('data', $validated);
 
         $user->fill($validated);
 
