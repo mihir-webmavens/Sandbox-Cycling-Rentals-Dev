@@ -12,9 +12,7 @@ use Livewire\Component;
 class Profile extends Component
 {
     use ProfileValidationRules;
-
     public string $name = '';
-
     public string $email = '';
 
     /**

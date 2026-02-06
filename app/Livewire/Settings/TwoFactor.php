@@ -26,9 +26,7 @@ class TwoFactor extends Component
 
     #[Locked]
     public string $manualSetupKey = '';
-
     public bool $showModal = false;
-
     public bool $showVerificationStep = false;
 
     #[Validate('required|string|size:6', onUpdate: false)]
@@ -159,24 +157,24 @@ class TwoFactor extends Component
     {
         if ($this->twoFactorEnabled) {
             return [
-                'title' => __('Two-Factor Authentication Enabled'),
+                'title'       => __('Two-Factor Authentication Enabled'),
                 'description' => __('Two-factor authentication is now enabled. Scan the QR code or enter the setup key in your authenticator app.'),
-                'buttonText' => __('Close'),
+                'buttonText'  => __('Close'),
             ];
         }
 
         if ($this->showVerificationStep) {
             return [
-                'title' => __('Verify Authentication Code'),
+                'title'       => __('Verify Authentication Code'),
                 'description' => __('Enter the 6-digit code from your authenticator app.'),
-                'buttonText' => __('Continue'),
+                'buttonText'  => __('Continue'),
             ];
         }
 
         return [
-            'title' => __('Enable Two-Factor Authentication'),
+            'title'       => __('Enable Two-Factor Authentication'),
             'description' => __('To finish enabling two-factor authentication, scan the QR code or enter the setup key in your authenticator app.'),
-            'buttonText' => __('Continue'),
+            'buttonText'  => __('Continue'),
         ];
     }
 }

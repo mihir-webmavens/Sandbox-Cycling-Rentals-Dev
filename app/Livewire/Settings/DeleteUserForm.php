@@ -10,7 +10,6 @@ use Livewire\Component;
 class DeleteUserForm extends Component
 {
     use PasswordValidationRules;
-
     public string $password = '';
 
     /**

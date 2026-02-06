@@ -10,11 +10,8 @@ use Livewire\Component;
 class Password extends Component
 {
     use PasswordValidationRules;
-
     public string $current_password = '';
-
     public string $password = '';
-
     public string $password_confirmation = '';
 
     /**
@@ -25,7 +22,7 @@ class Password extends Component
         try {
             $validated = $this->validate([
                 'current_password' => $this->currentPasswordRules(),
-                'password' => $this->passwordRules(),
+                'password'         => $this->passwordRules(),
             ]);
         } catch (ValidationException $e) {
             $this->reset('current_password', 'password', 'password_confirmation');
