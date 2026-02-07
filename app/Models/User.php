@@ -74,4 +74,12 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmail
             ->map(fn ($word) => Str::substr($word, 0, 1))
             ->implode('');
     }
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('avatar')
+            ->singleFile()
+            ->useFallbackPath(public_path('/images/default-avatar.png'))
+            ->useFallbackUrl('https://placehold.net/avatar.svg');
+    }
 }

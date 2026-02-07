@@ -5,16 +5,52 @@
 
     <x-settings.layout :heading="__('Profile')" :subheading="__('Update your profile information.')">
         <form wire:submit="updateProfileInformation" class="my-6 w-full space-y-6">
-            <flux:input wire:model="first_name" :label="__('First Name')" type="text" required autofocus autocomplete="first-name" />
-            <flux:input wire:model="last_name" :label="__('Last Name')" type="text" required autofocus autocomplete="last-name" />
-             <div class="flex flex-col gap-4 sm:flex-row sm:items-end ">
+
+            <div class="flex items-center gap-4">
+
+                <div class="w-18 h-16 rounded-full overflow-hidden">
+                    @if ($avatarUrl)
+                        <img src="{{ $this->avatarPreview() }}" alt="{{ auth()->user()->name }}"
+                            class="w-full h-full object-cover">
+                    @endif
+
+                </div>
+
+                <flux:input type="file" wire:model="avatar" accept="image/png, image/jpeg, image/webp" />
+
+            </div>
+            @error('avatar')
+                <div
+                    class="mt-3 flex items-start gap-3 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700 dark:border-red-800 dark:bg-red-900/30 dark:text-red-300">
+
+                    <!-- icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mt-0.5 flex-shrink-0" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 9v3m0 4h.01M10.29 3.86l-7.6 13.16A2 2 0 004.4 20h15.2a2 2 0 001.71-2.98L13.71 3.86a2 2 0 00-3.42 0z" />
+                    </svg>
+
+                    <!-- text -->
+                    <span>{{ $message }}</span>
+
+                </div>
+            @enderror
+
+
+
+
+            <flux:input wire:model="first_name" :label="__('First Name')" type="text" required autofocus
+                autocomplete="first-name" />
+            <flux:input wire:model="last_name" :label="__('Last Name')" type="text" required autofocus
+                autocomplete="last-name" />
+            <div class="flex flex-col gap-4 sm:flex-row sm:items-end ">
 
                 <!-- Country -->
                 <div class="w-full sm:w-1/4">
 
                     <flux:field>
                         <flux:label>Country</flux:label>
-                        <flux:select name="country" wire:model="country" >
+                        <flux:select name="country" wire:model="country">
                             <flux:select.option value="IN">India</flux:select.option>
                             <flux:select.option value="CA">Canada</flux:select.option>
                             <flux:select.option value="US">United States</flux:select.option>
@@ -27,11 +63,12 @@
 
                 <!-- Phone -->
                 <div class="w-full sm:flex-1">
-                    
-                        <flux:field>
-                            <flux:label>Phone Number</flux:label>
-                            <flux:input name="phone" wire:model="phone"  type="tel" placeholder="123-456-7890" :value="old('phone')" required autocomplete="tel"/>
-                        </flux:field>
+
+                    <flux:field>
+                        <flux:label>Phone Number</flux:label>
+                        <flux:input name="phone" wire:model="phone" type="tel" placeholder="123-456-7890"
+                            :value="old('phone')" required autocomplete="tel" />
+                    </flux:field>
                 </div>
 
             </div>
@@ -44,7 +81,8 @@
                         <flux:text class="mt-4">
                             {{ __('Your email address is unverified.') }}
 
-                            <flux:link class="text-sm cursor-pointer" wire:click.prevent="resendVerificationNotification">
+                            <flux:link class="text-sm cursor-pointer"
+                                wire:click.prevent="resendVerificationNotification">
                                 {{ __('Click here to re-send the verification email.') }}
                             </flux:link>
                         </flux:text>

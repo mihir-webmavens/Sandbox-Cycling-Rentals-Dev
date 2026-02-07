@@ -8,16 +8,36 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
+use Livewire\WithFileUploads;
 
 class Profile extends Component
 {
-    use ProfileValidationRules;
+    use ProfileValidationRules, WithFileUploads;
     public string $first_name = '';
     public string $last_name = '';
     public string $email = '';
     public string $phone = '';
     public string $country = '';
     public string $status = '';
+    public $avatar;
+    public $avatarUrl;
+
+    public function updatedAvatar()
+    {
+        $this->validate([
+            'avatar' => 'image|max:10240', // 10MB Max
+        ]);
+    }
+
+    public function avatarPreview()
+    {
+        if ($this->avatar instanceof TemporaryUploadedFile) {
+            return $this->avatar->temporaryUrl();
+        }
+
+        return $this->avatarUrl;
+    }
 
     /**
      * Mount the component.
@@ -29,6 +49,7 @@ class Profile extends Component
         $this->email = Auth::user()->email;
         $this->phone = Auth::user()->phone;
         $this->country = Auth::user()->country;
+        $this->avatarUrl = Auth::user()->getFirstMediaUrl('avatar');
     }
 
     public function profileRules($userId)
@@ -49,6 +70,7 @@ class Profile extends Component
                 'unique:users,phone,' . $userId,
             ],
             'country' => ['required', 'string', 'in:IN,CA,US,ES,CN'],
+            'avatar'  => 'image|max:10240', // 10MB Max
         ];
     }
 
@@ -61,8 +83,12 @@ class Profile extends Component
 
         $validated = $this->validate($this->profileRules($user->id));
 
-        info('data', $validated);
+        if ($this->avatar instanceof TemporaryUploadedFile) {
+            $user->addMedia($this->avatar)
+                ->toMediaCollection('avatar');
+        }
 
+        unset($validated['avatar']);
         $user->fill($validated);
 
         if ($user->isDirty('email')) {
@@ -70,6 +96,8 @@ class Profile extends Component
         }
 
         $user->save();
+        $this->avatarUrl = $user->getFirstMediaUrl('avatar'); // ✅ update url
+        $this->avatar = $this->avatarUrl;
 
         $this->dispatch('profile-updated', name: $user->name);
     }
