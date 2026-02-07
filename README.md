@@ -1,0 +1,1 @@
+https://ui-avatars.com/api/?name={$initials}&background=fff&color=333&size=128&bold=true&length=2

@@ -7,7 +7,6 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Str;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -68,11 +67,11 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmail
      */
     public function initials(): string
     {
-        return Str::of($this->first_name . ' ' . $this->last_name)
-            ->explode(' ')
-            ->take(2)
-            ->map(fn ($word) => Str::substr($word, 0, 1))
-            ->implode('');
+        if ($this->hasMedia('avatar')) {
+            return $this->getFirstMediaUrl('avatar', 's3');
+        }
+
+        return "https://ui-avatars.com/api/?name={$this->first_name} {$this->last_name}&background=fff&color=333&size=128&bold=true&length=2";
     }
 
     public function registerMediaCollections(): void
