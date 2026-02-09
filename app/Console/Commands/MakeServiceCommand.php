@@ -104,6 +104,11 @@ class MakeServiceCommand extends Command
                 return \$this->repository->all();
             }
 
+            public function paginate(?int \$perpage = null)
+            {
+                return \$this->repository->paginate();
+            }
+
             public function find(\$id)
             {
                 return \$this->repository->find(\$id);

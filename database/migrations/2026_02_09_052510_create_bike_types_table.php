@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('bike_types', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('slug')->unique();
+            $table->string('code')->nullable();
+            $table->text('image')->nullable();
+            $table->longText('description')->nullable();
+            $table->longText('features')->nullable();
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }

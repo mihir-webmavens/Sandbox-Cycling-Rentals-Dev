@@ -13,9 +13,9 @@ class BikeTypeService
         $this->repository = $repository;
     }
 
-    public function all()
+    public function all($request = null)
     {
-        return $this->repository->all();
+        return $this->repository->all($request);
     }
 
     public function find($id)

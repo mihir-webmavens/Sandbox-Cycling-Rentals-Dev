@@ -14,9 +14,11 @@ class BikeTypeController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $bikeTypes = $this->bikeTypeService->all($request->except('_token'));
+
+        return view('admin.bike-type.index', compact('bikeTypes'));
     }
 
     /**
