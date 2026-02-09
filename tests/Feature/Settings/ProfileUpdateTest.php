@@ -2,6 +2,7 @@
 
 use App\Livewire\Settings\Profile;
 use App\Models\User;
+use Illuminate\Http\UploadedFile;
 use Livewire\Livewire;
 
 test('profile page is displayed', function () {
@@ -16,6 +17,7 @@ test('profile information can be updated', function () {
     $this->actingAs($user);
 
     $response = Livewire::test(Profile::class)
+        ->set('avatar', UploadedFile::fake()->image('avatar.jpg'))
         ->set('first_name', 'Test')
         ->set('last_name', 'User')
         ->set('phone', '1234567890')
@@ -41,6 +43,7 @@ test('email verification status is unchanged when email address is unchanged', f
     $this->actingAs($user);
 
     $response = Livewire::test(Profile::class)
+        ->set('avatar', UploadedFile::fake()->image('avatar.jpg'))
         ->set('first_name', 'Test')
         ->set('last_name', ' User')
         ->set('phone', '1234567890')
