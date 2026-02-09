@@ -28,12 +28,12 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmail
         'email',
         'password',
         'country',
-        'status',
+        'is_active',
         'avatar',
         'role_id',
     ];
     protected $attributes = [
-        'status' => UserStatusEnum::ACTIVE,
+        'is_active' => UserStatusEnum::ACTIVE,
     ];
 
     /**
@@ -58,7 +58,7 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmail
         return [
             'email_verified_at' => 'datetime',
             'password'          => 'hashed',
-            'status'            => UserStatusEnum::class,
+            'is_active'         => UserStatusEnum::class,
         ];
     }
 

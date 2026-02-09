@@ -100,6 +100,11 @@ class MakeRepositoryCommand extends Command
                 return {$model}::all();
             }
 
+            public function paginate(?int \$perpage = null)
+            {
+                return {$model}::paginate(\$perpage ?? config("app.product_per_page"));;
+            }
+
             public function find(\$id)
             {
                 return {$model}::findOrFail(\$id);

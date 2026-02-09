@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('last_name')->after('first_name');
             $table->string('country', 5)->nullable()->after('email');
             $table->string('phone', 20)->nullable()->after('country');
-            $table->tinyInteger('status')->after('phone');
+            $table->tinyInteger('is_active')->after('phone');
         });
     }
 
@@ -28,7 +28,7 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('name');
-            $table->dropColumn(['first_name', 'last_name', 'phone', 'country', 'status', 'avatar']);
+            $table->dropColumn(['first_name', 'last_name', 'phone', 'country', 'is_active', 'avatar']);
         });
     }
 };

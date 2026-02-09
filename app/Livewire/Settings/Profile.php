@@ -19,7 +19,6 @@ class Profile extends Component
     public string $email = '';
     public string $phone = '';
     public string $country = '';
-    public string $status = '';
     public $avatar;
     public $avatarUrl;
 

@@ -20,7 +20,7 @@ class CreateNewUser implements CreatesNewUsers
             'email'      => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
             'phone'      => ['required', 'digits_between:10,12', 'unique:users,phone'],
             'country'    => ['required', 'string', 'in:IN,CA,US,ES,CN'],
-            // 'status'  => ['nullable', 'integer', 'in:0,1'],
+            // 'is_active'  => ['nullable', 'integer', 'in:0,1'],
         ];
     }
 
